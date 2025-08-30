@@ -65,7 +65,7 @@ A full-stack web application for booking, managing, and tracking salon appointme
 ### 📦 Installation
 
 ```bash
-git clone https://github.com/purushotham2628/salon-appointment-system.git
+git clone https://github.com/Krishnakanth303/Salon-appointment-system.git
 cd salon-appointment-system
 npm install
 ```
