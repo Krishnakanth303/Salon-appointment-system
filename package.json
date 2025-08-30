@@ -1,0 +1,25 @@
+{
+  "name": "salon-booking-system",
+  "version": "1.0.0",
+  "description": "A salon booking system with appointment management",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.2.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^4.18.2",
+    "nodemailer": "^7.0.3"
+  },
+  "keywords": [
+    "salon",
+    "booking",
+    "appointments"
+  ],
+  "author": "",
+  "license": "ISC"
+}

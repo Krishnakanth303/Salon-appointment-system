@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: salon-appointment-system
+    env: node
+    plan: free
+    buildCommand: npm install && npm rebuild better-sqlite3 --build-from-source
+    startCommand: node server.js
+    envVars:
+      - key: EMAIL_USER
+        sync: false
+      - key: EMAIL_PASS
+        sync: false
+      - key: ADMIN_USER
+        sync: false
+      - key: ADMIN_PASS
+        sync: false

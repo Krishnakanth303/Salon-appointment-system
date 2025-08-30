@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Purush Salon - Book Your Appointment</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <h1>Purush Salon</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#booking">Book Now</a></li>
+                <li><a href="admin.html">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h2>Premium Men's Grooming Experience</h2>
+                <p>Experience the finest in men's grooming with our expert stylists and premium services</p>
+                <a href="#booking" class="cta-button">Book Appointment</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.pexels.com/photos/1570807/pexels-photo-1570807.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Professional Men's Haircut">
+            </div>
+        </section>
+
+        <!-- Services Section -->
+<!-- Services Section -->
+<section id="services" class="services">
+  <div class="container">
+    <h2>Our Services</h2>
+    <div class="services-grid">
+
+      <!-- Premium Haircut -->
+      <div class="service-card">
+        <img src="assets/images/premium-haircut.webp" alt="Men's Haircut">
+        <h3>Premium Haircut</h3>
+        <p>Professional styling and cutting by expert barbers</p>
+        <span class="price">₹350</span>
+      </div>
+
+      <!-- Classic Shave -->
+      <div class="service-card">
+        <img src="assets/images/classic-shave.jpg" alt="Classic Shave">
+        <h3>Classic Shave</h3>
+        <p>Traditional hot towel shave with premium products</p>
+        <span class="price">₹250</span>
+      </div>
+
+      <!-- Deep Face Cleanse -->
+      <div class="service-card">
+        <img src="assets/images/deep-face-cleanse.jpg" alt="Facial Cleanse">
+        <h3>Deep Face Cleanse</h3>
+        <p>Refreshing facial treatment for healthy skin</p>
+        <span class="price">₹200</span>
+      </div>
+
+      <!-- Head & Shoulder Massage -->
+      <div class="service-card">
+        <img src="assets/images/head-shoulder-massage.jpg" alt="Head Massage">
+        <h3>Head & Shoulder Massage</h3>
+        <p>Relaxing massage to relieve stress and tension</p>
+        <span class="price">₹300</span>
+      </div>
+
+      <!-- Beard Styling -->
+      <div class="service-card">
+        <img src="assets/images/beard-styling.webp" alt="Beard Trim">
+        <h3>Beard Styling</h3>
+        <p>Professional beard trimming and styling</p>
+        <span class="price">₹200</span>
+      </div>
+
+      <!-- Premium Hair Wash -->
+      <div class="service-card">
+        <img src="assets/images/premium-hair-wash.jpg" alt="Hair Wash">
+        <h3>Premium Hair Wash</h3>
+        <p>Luxurious hair washing with premium shampoo</p>
+        <span class="price">₹150</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+        <!-- Booking Section -->
+        <section id="booking" class="booking">
+            <div class="container">
+                <h2>Book Your Appointment</h2>
+                <div class="booking-form-container">
+                    <form id="bookingForm" class="booking-form">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="service">Select Service</label>
+                            <select id="service" name="service" required>
+                                <option value="">Choose a service</option>
+                                <option value="Premium Haircut">Premium Haircut - ₹350</option>
+                                <option value="Classic Shave">Classic Shave - ₹250</option>
+                                <option value="Deep Face Cleanse">Deep Face Cleanse - ₹200</option>
+                                <option value="Head & Shoulder Massage">Head & Shoulder Massage - ₹300</option>
+                                <option value="Beard Styling">Beard Styling - ₹200</option>
+                                <option value="Premium Hair Wash">Premium Hair Wash - ₹150</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="date">Preferred Date</label>
+                                <input type="date" id="date" name="date" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="time">Preferred Time</label>
+                                <select id="time" name="time" required>
+                                    <option value="">Select time</option>
+                                    <option value="09:00">9:00 AM</option>
+                                    <option value="10:00">10:00 AM</option>
+                                    <option value="11:00">11:00 AM</option>
+                                    <option value="12:00">12:00 PM</option>
+                                    <option value="13:00">1:00 PM</option>
+                                    <option value="14:00">2:00 PM</option>
+                                    <option value="15:00">3:00 PM</option>
+                                    <option value="16:00">4:00 PM</option>
+                                    <option value="17:00">5:00 PM</option>
+                                    <option value="18:00">6:00 PM</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Book Appointment</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+    <div class="container">
+        <p>&copy; 2025 Purush Salon. All rights reserved.</p>
+        <p>Contact: +91 7022002842 | purushotham2628@gmail.com</p>
+    </div>
+</footer>
+
+
+    <script src="script.js"></script>
+
+    <!-- Watermark -->
+    <div style="
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        font-size: 13px;
+        color: rgba(0,0,0,0.5);
+        background-color: rgba(255,255,255,0.6);
+        padding: 5px 10px;
+        border-radius: 5px;
+        pointer-events: none;
+        z-index: 999;
+    ">
+        Built by Purushotham E
+    </div>
+</body>
+</html>

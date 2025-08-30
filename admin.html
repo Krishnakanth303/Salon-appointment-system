@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Purush Salon</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <h1>Purush Salon - Admin</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Back to Home</a></li>
+                <li><button id="logoutBtn" class="logout-btn" style="display: none;">Logout</button></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Login Form -->
+    <div id="loginContainer" class="login-container">
+        <div class="login-form-container">
+            <h2>Admin Login</h2>
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                
+                <button type="submit" class="login-btn">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Panel (Hidden by default) -->
+    <main id="adminPanel" class="admin-main" style="display: none;">
+        <div class="container">
+            <h2>Appointment Management</h2>
+            
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <h3 id="totalAppointments">0</h3>
+                    <p>Total Appointments</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="pendingAppointments">0</h3>
+                    <p>Pending</p>
+                </div>
+                <div class="stat-card">
+                    <h3 id="confirmedAppointments">0</h3>
+                    <p>Confirmed</p>
+                </div>
+            </div>
+
+            <div class="appointments-container">
+                <div class="appointments-header">
+                    <h3>All Appointments</h3>
+                    <button id="refreshBtn" class="refresh-btn">Refresh</button>
+                </div>
+                
+                <div id="appointmentsList" class="appointments-list">
+                    <!-- Appointments will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="admin.js"></script>
+
+    <!-- Watermark -->
+    <div style="
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        font-size: 13px;
+        color: rgba(0,0,0,0.5);
+        background-color: rgba(255,255,255,0.6);
+        padding: 5px 10px;
+        border-radius: 5px;
+        pointer-events: none;
+        z-index: 999;
+    ">
+        Built by Purushotham E
+    </div>
+</body>
+</html>
