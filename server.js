@@ -90,7 +90,7 @@ app.post('/api/book', (req, res) => {
                 <p>Status: <strong>Pending</strong></p>
                 <p>We’ll confirm shortly. Thank you!</p>
                 <br>
-                <p>– Purush Salon</p>
+                <p>– Krishna Salon</p>
             `
         };
 
@@ -123,7 +123,7 @@ app.post('/api/confirm', (req, res) => {
                 <h2>Hi ${row.name},</h2>
                 <p>Your appointment for <strong>${row.service}</strong> on <strong>${row.date}</strong> at <strong>${row.time}</strong> has been <strong>confirmed</strong>.</p>
                 <p>We look forward to seeing you!</p>
-                <br><p>– Purush Salon</p>
+                <br><p>– Krishna Salon</p>
             `
         };
 
@@ -156,7 +156,7 @@ app.post('/api/reject', (req, res) => {
                 <h2>Hi ${row.name},</h2>
                 <p>We regret to inform you that your appointment for <strong>${row.service}</strong> on <strong>${row.date}</strong> at <strong>${row.time}</strong> was <strong>rejected</strong>.</p>
                 <p>Please try booking another time or contact us directly.</p>
-                <br><p>– Purush Salon</p>
+                <br><p>– Krishna Salon</p>
             `
         };
 
