@@ -7,11 +7,29 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function checkAuthStatus() {
-    const isAuthenticated = sessionStorage.getItem('adminAuthenticated');
+    const token = localStorage.getItem('adminToken');
 
-    if (isAuthenticated === 'true') {
-        showAdminPanel();
-        loadAppointments();
+    if (token) {
+        // Verify token is still valid by making a test request
+        fetch('/api/appointments', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                showAdminPanel();
+                loadAppointments();
+            } else {
+                // Token invalid or expired
+                localStorage.removeItem('adminToken');
+                showLoginForm();
+            }
+        })
+        .catch(() => {
+            localStorage.removeItem('adminToken');
+            showLoginForm();
+        });
     } else {
         showLoginForm();
     }
@@ -40,7 +58,7 @@ async function handleLogin(e) {
         loginBtn.textContent = 'Logging in...';
         loginBtn.disabled = true;
 
-        const response = await fetch('/admin-login', { // Corrected endpoint
+        const response = await fetch('/admin-login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -51,12 +69,12 @@ async function handleLogin(e) {
         const result = await response.json();
 
         if (response.ok && result.success) {
-            sessionStorage.setItem('adminAuthenticated', 'true');
+            localStorage.setItem('adminToken', result.token);
             showAdminPanel();
             loadAppointments();
             showMessage('Login successful!', 'success');
         } else {
-            showMessage('Invalid username or password!', 'error');
+            showMessage(result.message || 'Invalid username or password!', 'error');
         }
     } catch (error) {
         console.error('Login error:', error);
@@ -68,21 +86,41 @@ async function handleLogin(e) {
 }
 
 function handleLogout() {
-    sessionStorage.removeItem('adminAuthenticated');
+    localStorage.removeItem('adminToken');
     showLoginForm();
     document.getElementById('loginForm').reset();
     showMessage('Logged out successfully!', 'success');
 }
 
 async function loadAppointments() {
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+        showLoginForm();
+        return;
+    }
+
     try {
         const refreshBtn = document.getElementById('refreshBtn');
         refreshBtn.textContent = 'Loading...';
         refreshBtn.disabled = true;
 
-        const response = await fetch('/api/appointments');
-        const appointments = await response.json();
+        const response = await fetch('/api/appointments', {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
 
+        if (!response.ok) {
+            if (response.status === 401 || response.status === 403) {
+                localStorage.removeItem('adminToken');
+                showLoginForm();
+                showMessage('Session expired. Please login again.', 'error');
+                return;
+            }
+            throw new Error('Failed to load appointments');
+        }
+
+        const appointments = await response.json();
         displayAppointments(appointments);
         updateStats(appointments);
 
@@ -124,8 +162,13 @@ function displayAppointments(appointments) {
                 <div class="appointment-actions">
                     <button class="confirm-btn" onclick="confirmAppointment(${appointment.id})">Confirm</button>
                     <button class="reject-btn" onclick="rejectAppointment(${appointment.id})">Reject</button>
+                    <button class="delete-btn" onclick="deleteAppointment(${appointment.id})">Delete</button>
                 </div>
-            ` : ''}
+            ` : `
+                <div class="appointment-actions">
+                    <button class="delete-btn" onclick="deleteAppointment(${appointment.id})">Delete</button>
+                </div>
+            `}
         </div>
     `).join('');
 }
@@ -143,20 +186,29 @@ function updateStats(appointments) {
 async function confirmAppointment(id) {
     if (!confirm('Are you sure you want to confirm this appointment?')) return;
 
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+        showLoginForm();
+        return;
+    }
+
     try {
         const response = await fetch('/api/confirm', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify({ id })
         });
 
         const result = await response.json();
 
-        if (result.success) {
+        if (response.ok && result.success) {
             showMessage('Appointment confirmed successfully!', 'success');
             loadAppointments();
         } else {
-            showMessage('Failed to confirm appointment. Please try again.', 'error');
+            showMessage(result.message || 'Failed to confirm appointment.', 'error');
         }
     } catch (error) {
         console.error('Error confirming appointment:', error);
@@ -167,23 +219,63 @@ async function confirmAppointment(id) {
 async function rejectAppointment(id) {
     if (!confirm('Are you sure you want to reject this appointment?')) return;
 
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+        showLoginForm();
+        return;
+    }
+
     try {
         const response = await fetch('/api/reject', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify({ id })
         });
 
         const result = await response.json();
 
-        if (result.success) {
+        if (response.ok && result.success) {
             showMessage('Appointment rejected successfully!', 'success');
             loadAppointments();
         } else {
-            showMessage('Failed to reject appointment. Please try again.', 'error');
+            showMessage(result.message || 'Failed to reject appointment.', 'error');
         }
     } catch (error) {
         console.error('Error rejecting appointment:', error);
+        showMessage('An error occurred. Please try again.', 'error');
+    }
+}
+
+async function deleteAppointment(id) {
+    if (!confirm('Are you sure you want to delete this appointment? This action cannot be undone.')) return;
+
+    const token = localStorage.getItem('adminToken');
+    if (!token) {
+        showLoginForm();
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/appointments/${id}`, {
+            method: 'DELETE',
+            headers: { 
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+            showMessage('Appointment deleted successfully!', 'success');
+            loadAppointments();
+        } else {
+            showMessage(result.message || 'Failed to delete appointment.', 'error');
+        }
+    } catch (error) {
+        console.error('Error deleting appointment:', error);
         showMessage('An error occurred. Please try again.', 'error');
     }
 }
@@ -228,8 +320,9 @@ function formatDateTime(dateTimeString) {
     return date.toLocaleDateString('en-US', options);
 }
 
+// Auto-refresh appointments every 30 seconds if logged in
 setInterval(() => {
-    if (sessionStorage.getItem('adminAuthenticated') === 'true') {
+    if (localStorage.getItem('adminToken')) {
         loadAppointments();
     }
 }, 30000);
