@@ -479,6 +479,21 @@ body {
     background: #c0392b;
 }
 
+.delete-btn {
+    background: #95a5a6;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+.delete-btn:hover {
+    background: #7f8c8d;
+}
+
 /* Success/Error Messages */
 .message {
     padding: 1rem;
